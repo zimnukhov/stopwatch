@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Stopwatch</title>
+        <link rel="stylesheet" href="{{ .HrefPrefix }}/css/stopwatch.css" />
+        <script type="text/javascript" src="{{ .HrefPrefix }}/js/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript">
+        window.StopwatchPrefix = "{{ .HrefPrefix }}";
+        window.DayStartHour = {{ .DayStartHour }};
+        </script>
+        <script type="text/javascript" src="{{ .HrefPrefix }}/js/stopwatch.js"></script>
+    </head>
+
+    <body>
+        <div id="time"></div>
+        <button id="toggle" class="start">start</button>
+        <div id="timeline"></div>
+        <ul id="stats" class="stats">
+            {{ range .Days }}
+            <li><a href="{{ $.HrefPrefix }}/stats/{{ .Date }}/">{{ .Date }} - {{ .FormatElapsedTime }}</a></li>
+            {{ end }}
+        </ul>
+    </body>
+</html>

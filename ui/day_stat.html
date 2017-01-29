@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Timer</title>
+        <link rel="stylesheet" href="{{ .HrefPrefix }}/css/stopwatch.css" />
+        <script type="text/javascript" src="{{ .HrefPrefix }}/js/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript">
+        window.StopwatchPrefix = "{{ .HrefPrefix }}";
+        window.DayStartHour = {{ .DayStartHour }};
+        </script>
+        <script type="text/javascript" src="{{ .HrefPrefix }}/js/stopwatch.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <a href="{{ .HrefPrefix }}/">Dashboard</a>
+        </header>
+        <div id="time">{{ .ElapsedTime }}</div>
+        <div id="timeline"></div>
+    </body>
+</html>
