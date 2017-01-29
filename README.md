@@ -32,6 +32,7 @@ A single executable file **stopwatch** will be created.
 
 ## Configuration
 Stopwatch config is in TOML format. There are three sections of config:
+
 1. stopwatch - the core configuration. 
 
     Here you set the hour that should be considered start of the day and a path to log file
