@@ -68,3 +68,8 @@ To use stopwatch execute the **stopwatch** binary and provide a path to config f
     ./stopwatch -config=path/to/config.toml
 
 stopwatch will run in foreground, so it's better to daemonize it using a tool like systemd, launchd etc.
+
+## Accessing UI
+After launching the app, open your browser and navigate to the URL of the server you configured.
+In case of config example above it will be [http://localhost:8090/](http://localhost:8090/)
+
