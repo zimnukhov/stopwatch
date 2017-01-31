@@ -3,7 +3,7 @@ $(function() {
     var startHour = window.DayStartHour;
 
     var getDayStart = function(date) {
-        if (date.getHours() <= startHour) {
+        if (date.getHours() < startHour) {
             date = new Date(date.getTime() - 86400000);
         }
         date.setHours(startHour);
@@ -166,7 +166,6 @@ $(function() {
             }
         });
         // subscribe to updates over websocket:
-        console.log("ws://" + location.host + "/" + StopwatchPrefix + "/updates");
         (function() {
             var updatesSocket = new WebSocket("ws://" + location.host + StopwatchPrefix + "/updates");
 
