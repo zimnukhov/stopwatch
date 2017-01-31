@@ -171,7 +171,7 @@ func writeResponse(w http.ResponseWriter, sw *Stopwatch) error {
 // if there is an open session in the end of day then it's split
 // into two, first part is closed on the end of the day and
 // the second part is starting at the same time
-func DaySplitWorker(sw *Stopwatch) {
+func DaySplitWorker(sw *Stopwatch, updates chan<- bool) {
 	nextDayEnd := dayEnd(time.Now(), sw.config.DayStartHour)
 
 	for {
@@ -197,6 +197,7 @@ func DaySplitWorker(sw *Stopwatch) {
 				continue
 			}
 			nextDayEnd = dayEnd(time.Now(), sw.config.DayStartHour)
+			updates <- true
 		}
 	}
 }

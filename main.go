@@ -75,7 +75,6 @@ func main() {
 		return
 	}
 
-	go DaySplitWorker(sw)
 	log.Printf("started\n")
 
 	// a channel of all updates to stopwatch state, input for websocket worker
@@ -83,6 +82,7 @@ func main() {
 	register := make(chan *websocketClient)
 	unregister := make(chan *websocketClient)
 
+	go DaySplitWorker(sw, updates)
 	go UpdatesWorker(updates, register, unregister)
 
 	http.HandleFunc("/time", func(w http.ResponseWriter, r *http.Request) {
