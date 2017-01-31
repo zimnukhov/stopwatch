@@ -130,6 +130,9 @@ $(function() {
                 }
 
                 var sessionTS2TimelinePercent = function(start, end) {
+                    if (end == 0) {
+                        end = endTime;
+                    }
                     return [
                         100 * (start - zeroPoint) / (endTime - zeroPoint),
                         100 * (end - start) / (endTime - zeroPoint)
@@ -137,13 +140,18 @@ $(function() {
                 }
 
                 for(var i=0; i < sessions.length; i++) {
-                    var pixData = sessionTS2TimelinePercent(sessions[i].start, sessions[i].end);
+                    var sessionEnd = sessions[i].end;
+                    if (sessionEnd == 0) {
+                        sessionEnd = endTime;
+                    }
+
+                    var pixData = sessionTS2TimelinePercent(sessions[i].start, sessionEnd);
                     console.log("left " + pixData[0]);
                     console.log("width " + pixData[1]);
                     console.log("endtime " + endTime);
                     console.log("zero point " + zeroPoint);
-                    var titleText = new Date(sessions[i].start) + " - " + new Date(sessions[i].end);
-                    titleText += " duration: " + getDurationString(sessions[i].end - sessions[i].start);
+                    var titleText = new Date(sessions[i].start) + " - " + new Date(sessionEnd);
+                    titleText += " duration: " + getDurationString(sessionEnd - sessions[i].start);
 
                     $("<div>").addClass("work")
                         .css("width", pixData[1] + "%")
