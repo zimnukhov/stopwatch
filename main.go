@@ -136,6 +136,10 @@ func main() {
 			for _, session := range sw.Sessions {
 				sessionsAPI = append(sessionsAPI, session.ToAPIResponse())
 			}
+
+			if sw.Session != nil {
+				sessionsAPI = append(sessionsAPI, sw.Session.ToAPIResponse())
+			}
 		} else {
 			tsInt, err := strconv.ParseInt(ts[0], 10, 64)
 			if err != nil {

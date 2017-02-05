@@ -65,7 +65,7 @@ func NewStopwatch(cfg *Config) (*Stopwatch, error) {
 }
 
 // LoadSessions gets sessions for current day from db,
-// populates s.Sessions slice and setes s.ElapsedTime
+// populates s.Sessions slice and sets s.ElapsedTime
 func (s *Stopwatch) LoadSessions() error {
 	sessions, err := getAllSessions(s.db, s.config, s.DayStart)
 
@@ -82,6 +82,13 @@ func (s *Stopwatch) LoadSessions() error {
 	}
 
 	s.Sessions = sessions
+
+	// if there is an open session, do not include it
+	// in closed session slice
+	if s.Session != nil {
+		s.Sessions = s.Sessions[:len(s.Sessions)-1]
+	}
+
 	return nil
 }
 
