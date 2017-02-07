@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"fmt"
 	"io/ioutil"
 
 	"github.com/BurntSushi/toml"
@@ -72,5 +74,20 @@ func ParseConfig(filePath string) (*Config, error) {
 	}
 
 	return cfg, nil
+}
 
+// PrintDefaultConfig prints TOML-encoded default config
+func PrintDefaultConfig() error {
+	cfg := NewConfig()
+	buf := new(bytes.Buffer)
+
+	enc := toml.NewEncoder(buf)
+	err := enc.Encode(cfg)
+
+	if err != nil {
+		return err
+	}
+
+	fmt.Println(buf.String())
+	return nil
 }

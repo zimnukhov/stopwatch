@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	"path"
 	"regexp"
 	"strconv"
@@ -60,9 +61,20 @@ func UpdatesWorker(input <-chan bool, register <-chan *websocketClient, unregist
 }
 
 var cfgPath = flag.String("config", "config.toml", "path to config file")
+var defaultCfgFlag = flag.Bool("default-config", false, "print default config and exit")
 
 func main() {
 	flag.Parse()
+
+	if *defaultCfgFlag {
+		err := PrintDefaultConfig()
+
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "failed to print config")
+		}
+		return
+	}
+
 	cfg, err := ParseConfig(*cfgPath)
 	if err != nil {
 		log.Fatalf("failed to parse config: %s\n", err)
