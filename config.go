@@ -53,7 +53,7 @@ func NewConfig() *Config {
 		},
 		HTTP: &HTTPConfig{
 			Port:       8080,
-			StaticDir:  "ui",
+			StaticDir:  "/usr/local/stopwatch/ui",
 			HrefPrefix: "/stopwatch",
 		},
 	}
