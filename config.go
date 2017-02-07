@@ -43,6 +43,7 @@ func NewConfig() *Config {
 	return &Config{
 		Stopwatch: &StopwatchConfig{
 			DayStartHour: 8,
+			Log:          "/usr/local/stopwatch/error.log",
 		},
 		DB: &DBConfig{
 			Host:     "127.0.0.1",
