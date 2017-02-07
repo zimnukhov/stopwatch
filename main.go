@@ -60,7 +60,7 @@ func UpdatesWorker(input <-chan bool, register <-chan *websocketClient, unregist
 	}
 }
 
-var cfgPath = flag.String("config", "config.toml", "path to config file")
+var cfgPath = flag.String("config", "/usr/local/stopwatch/stopwatch.conf", "path to config file")
 var defaultCfgFlag = flag.Bool("default-config", false, "print default config and exit")
 
 func main() {
