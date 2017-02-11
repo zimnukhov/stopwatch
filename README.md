@@ -68,6 +68,13 @@ To use stopwatch execute the **stopwatch** binary and provide a path to config f
     ./stopwatch -config=path/to/config.toml
 
 stopwatch will run in foreground, so it's better to daemonize it using a tool like systemd, launchd etc.
+Launchd plist file can be found at `scripts/stopwatch.plist`. Use it as follows:
+
+```
+sudo cp scripts/stopwatch.plist /Library/LaunchDaemons/stopwatch.plist
+sudo launchctl load /Library/LaunchDaemons/stopwatch.plist
+sudo launchctl start stopwatch
+```
 
 ## Accessing UI
 After launching the app, open your browser and navigate to the URL of the server you configured.
