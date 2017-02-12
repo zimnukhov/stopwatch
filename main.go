@@ -60,8 +60,14 @@ func UpdatesWorker(input <-chan bool, register <-chan *websocketClient, unregist
 	}
 }
 
+// config-related flags
 var cfgPath = flag.String("config", "/usr/local/stopwatch/stopwatch.conf", "path to config file")
 var defaultCfgFlag = flag.Bool("default-config", false, "print default config and exit")
+
+// flags for CLI commands
+var startFlag = flag.Bool("start", false, "[CLI] start time")
+var stopFlag = flag.Bool("stop", false, "[CLI] stop time")
+var statusFlag = flag.Bool("status", false, "[CLI] show current status and time")
 
 func main() {
 	flag.Parse()
@@ -80,6 +86,20 @@ func main() {
 		log.Fatalf("failed to parse config: %s\n", err)
 		return
 	}
+
+	cliFlags := countClientFlags()
+	if cliFlags > 1 {
+		fmt.Fprintf(os.Stderr, "Only one CLI flag must be set")
+		return
+	}
+
+	if cliFlags == 1 {
+		// client mode
+		baseURL := getURL(cfg.HTTP)
+		runClient(baseURL)
+		return
+	}
+	// server mode
 
 	sw, err := NewStopwatch(cfg)
 	if err != nil {
