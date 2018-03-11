@@ -18,8 +18,9 @@ type Config struct {
 // StopwatchConfig is part of config related to the app itself
 // time settings and logging go here
 type StopwatchConfig struct {
-	DayStartHour int    `toml:"day_start_hour"`
-	Log          string `toml:"log"`
+	DayStartHour         int    `toml:"day_start_hour"`
+	Log                  string `toml:"log"`
+	DisplayNotifications bool   `toml:"display_notifications"` // display os x notifcations via osascript
 }
 
 // DBConfig is MySQL configuration
@@ -42,8 +43,9 @@ type HTTPConfig struct {
 func NewConfig() *Config {
 	return &Config{
 		Stopwatch: &StopwatchConfig{
-			DayStartHour: 8,
-			Log:          "/usr/local/stopwatch/error.log",
+			DayStartHour:         8,
+			Log:                  "/usr/local/stopwatch/error.log",
+			DisplayNotifications: false,
 		},
 		DB: &DBConfig{
 			Host:     "127.0.0.1",

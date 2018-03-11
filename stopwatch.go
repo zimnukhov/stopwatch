@@ -15,13 +15,14 @@ import (
 // An instance of this type is created when the app starts.
 // Structure holds all sessions for current day and start of the day.
 type Stopwatch struct {
-	ElapsedTime int64      // total ms for previous sessions
-	Sessions    []*Session // closed sessions
-	Session     *Session
-	db          *sql.DB
-	DayStart    time.Time
-	config      *StopwatchConfig
-	lock        sync.Mutex
+	ElapsedTime   int64      // total ms for previous sessions
+	Sessions      []*Session // closed sessions
+	Session       *Session
+	db            *sql.DB
+	DayStart      time.Time
+	config        *StopwatchConfig
+	lock          sync.Mutex
+	notifications chan Notification
 }
 
 // NewStopwatch creates and initializes a Stopwatch instance
@@ -53,6 +54,10 @@ func NewStopwatch(cfg *Config) (*Stopwatch, error) {
 		db:       db,
 		DayStart: time.Now(),
 		config:   cfg.Stopwatch,
+	}
+
+	if cfg.Stopwatch.DisplayNotifications {
+		sw.notifications = make(chan Notification)
 	}
 
 	err = sw.LoadSessions()
@@ -104,6 +109,13 @@ func (s *Stopwatch) Start() error {
 		if err != nil {
 			return err
 		}
+
+		if s.notifications != nil {
+			s.notifications <- Notification{
+				Title: "Stopwatch started",
+				Text:  formatElapsedTime(s.ElapsedTime),
+			}
+		}
 	}
 
 	return nil
@@ -127,6 +139,13 @@ func (s *Stopwatch) Stop() error {
 		s.Sessions = append(s.Sessions, session)
 		s.Session = nil
 		s.ElapsedTime += session.Duration()
+
+		if s.notifications != nil {
+			s.notifications <- Notification{
+				Title: "Stopwatch stopped",
+				Text:  formatElapsedTime(s.ElapsedTime),
+			}
+		}
 	}
 
 	return nil

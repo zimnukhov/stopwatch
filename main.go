@@ -107,6 +107,10 @@ func main() {
 		return
 	}
 
+	if cfg.Stopwatch.DisplayNotifications {
+		go NotificationWorker(sw.notifications)
+	}
+
 	log.Printf("started\n")
 
 	// a channel of all updates to stopwatch state, input for websocket worker
