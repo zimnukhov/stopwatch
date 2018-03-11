@@ -1,6 +1,6 @@
 INSTALL_DIR=/usr/local/stopwatch
 UI_DIR=$(INSTALL_DIR)/ui
-BIN_DIR=/usr/local/bin
+BIN_DIR=/usr/local/stopwatch/bin
 CONFIG_PATH=$(INSTALL_DIR)/stopwatch.conf
 
 all:
@@ -14,8 +14,7 @@ install: stopwatch
 	cp ui/css/stopwatch.css $(UI_DIR)/css/
 	cp ui/js/*.js $(UI_DIR)/js/
 	mkdir -p $(BIN_DIR)
-	cp stopwatch $(INSTALL_DIR)/
-	ln -sf $(INSTALL_DIR)/stopwatch $(BIN_DIR)/stopwatch
+	cp stopwatch $(BIN_DIR)/
 ifeq ($(wildcard $(CONFIG_PATH)),)
 	stopwatch -default-config >$(CONFIG_PATH)
 endif
